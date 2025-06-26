@@ -2,10 +2,7 @@ package com.depth.planet.domain.user.entity;
 
 import com.depth.planet.domain.user.entity.enums.GenderType;
 import com.depth.planet.domain.user.entity.enums.MBTI;
-import jakarta.persistence.ElementCollection;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -30,6 +27,7 @@ public class User {
     //======= 유저 성향 ==========
     private MBTI mbti;
 
+    @Enumerated(EnumType.STRING)
     private GenderType gender;
 
     @Builder.Default
