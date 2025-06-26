@@ -77,14 +77,23 @@ public class QuestController {
     return questService.findMyQuestToday(user);
   }
 
-  @PutMapping(value = "/{questId}/complete")
-  @Operation(summary = "퀘스트 완료", description = "퀘스트를 완료 처리하고 증거 이미지를 업로드합니다. (증거 이미지는 선택 사항)")
+  @PutMapping("/{questId}/complete/without-image")
+  @Operation(summary = "이미지 없이 퀘스트 완료", description = "이미지 없이 퀘스트를 완료 처리합니다. 경험치 +20")
   @ApiResponse(responseCode = "200", description = "퀘스트 완료 성공")
-  public QuestDto.QuestResponse completeQuest(
+  public QuestDto.QuestResponse completeQuestWithoutImage(
       @PathVariable Long questId,
-      @ModelAttribute @Valid QuestDto.CompleteQuestRequest request,
       @Parameter(hidden = true) @AuthenticationPrincipal UserDetails user) {
-    return questService.completeQuest(questId, request, user);
+    return questService.completeQuestWithoutImage(questId, user);
+  }
+
+  @PutMapping(value = "/{questId}/complete/with-image", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+  @Operation(summary = "이미지와 함께 퀘스트 완료", description = "증거 이미지와 함께 퀘스트를 완료 처리합니다. 경험치 +30")
+  @ApiResponse(responseCode = "200", description = "퀘스트 완료 성공")
+  public QuestDto.QuestResponse completeQuestWithImage(
+      @PathVariable Long questId,
+      @ModelAttribute @Valid QuestDto.CompleteQuestWithImageRequest request,
+      @Parameter(hidden = true) @AuthenticationPrincipal UserDetails user) {
+    return questService.completeQuestWithImage(questId, request, user);
   }
 
   @DeleteMapping("/my/all")

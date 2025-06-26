@@ -139,6 +139,57 @@ public class QuestService {
         return QuestDto.QuestResponse.from(quest);
     }
 
+    public QuestDto.QuestResponse completeQuestWithoutImage(Long questId, UserDetails user) {
+        Quest quest = questRepository.findById(questId)
+                .orElseThrow(() -> new RestException(ErrorCode.GLOBAL_NOT_FOUND));
+
+        if (quest.getIsCompleted()) {
+            throw new RestException(ErrorCode.QUEST_ALREADY_COMPLETED);
+        }
+
+        quest.complete();
+
+        // 이미지 없이 완료하는 경우 피드백 생성
+        String feedback = questFeedbackGenerateService.generateQuestFeedback(quest);
+        quest.setFeedback(feedback);
+
+        // 경험치 추가: 이미지 없이 완료 시 +20
+        userTierService.addExpToUser(user.getUser().getEmail(), 20);
+
+        return QuestDto.QuestResponse.from(quest);
+    }
+
+    public QuestDto.QuestResponse completeQuestWithImage(Long questId, QuestDto.CompleteQuestWithImageRequest request,
+            UserDetails user) {
+        Quest quest = questRepository.findById(questId)
+                .orElseThrow(() -> new RestException(ErrorCode.GLOBAL_NOT_FOUND));
+
+        if (quest.getIsCompleted()) {
+            throw new RestException(ErrorCode.QUEST_ALREADY_COMPLETED);
+        }
+
+        quest.complete();
+
+        // 이미지 처리 (필수)
+        if (request.getEvidenceImage() == null || request.getEvidenceImage().isEmpty()) {
+            throw new RestException(ErrorCode.GLOBAL_BAD_REQUEST); // 이미지가 필수인데 없을 경우
+        }
+
+        EvidenceImage toSave = EvidenceImage.from(request.getEvidenceImage(), quest);
+        fileSystemHandler.saveFile(request.getEvidenceImage(), toSave);
+        EvidenceImage saved = attachedFileRepository.save(toSave);
+        quest.setEvidenceImage(saved);
+
+        // 이미지와 함께 완료하는 경우 피드백 생성
+        String feedback = questFeedbackGenerateService.generateQuestFeedback(quest);
+        quest.setFeedback(feedback);
+
+        // 경험치 추가: 이미지와 함께 완료 시 +30
+        userTierService.addExpToUser(user.getUser().getEmail(), 30);
+
+        return QuestDto.QuestResponse.from(quest);
+    }
+
     public void deleteAllQuestsByUser(UserDetails user) {
         // 해당 유저의 모든 퀘스트 조회 (evidenceImage join)
         List<Quest> userQuests = questQueryRepository.findAllByUser(user);

@@ -3,7 +3,6 @@ package com.depth.planet.domain.quest.dto;
 import java.time.LocalDateTime;
 
 import org.jetbrains.annotations.Nullable;
-import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.depth.planet.domain.file.dto.FileDto;
@@ -101,7 +100,24 @@ public class QuestDto {
     @Schema(description = "퀘스트 완료 요청 DTO")
     public static class CompleteQuestRequest {
         @Nullable
-        @Schema(description = "퀘스트 완료 증거 이미지 파일",  type = "multipart", format = "multipart file")
+        @Schema(description = "퀘스트 완료 증거 이미지 파일", type = "multipart", format = "multipart file")
+        private MultipartFile evidenceImage;
+    }
+
+    @Data
+    @Builder
+    @Schema(description = "이미지 없이 퀘스트 완료 요청 DTO")
+    public static class CompleteQuestWithoutImageRequest {
+        // 이미지 없이 완료하는 경우에는 별도 파라미터가 필요없음
+    }
+
+    @AllArgsConstructor
+    @NoArgsConstructor
+    @Data
+    @Builder
+    @Schema(description = "이미지와 함께 퀘스트 완료 요청 DTO")
+    public static class CompleteQuestWithImageRequest {
+        @Schema(description = "퀘스트 완료 증거 이미지 파일", required = true, type = "multipart", format = "multipart file")
         private MultipartFile evidenceImage;
     }
 }
