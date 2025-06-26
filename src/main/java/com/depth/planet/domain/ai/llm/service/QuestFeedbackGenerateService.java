@@ -20,7 +20,6 @@ import java.util.Base64;
 @Service
 public class QuestFeedbackGenerateService {
 
-
     private final GoogleAiGeminiChatModel chatModel;
     private final FileSystemHandler fileSystemHandler;
 
