@@ -46,6 +46,8 @@ public enum ErrorCode {
 
     // Quest
     QUEST_ALREADY_COMPLETED(400, "이미 완료된 퀘스트입니다."),
+    QUEST_SUGGESTION_NOT_FOUND(404, "퀘스트 제안을 찾을 수 없습니다."),
+    QUEST_SUGGESTION_SIZE_MISMATCH(400, "퀘스트 제안의 개수가 일치하지 않습니다."),
 
     // Other
     INTERNAL_SERVER_ERROR(500, "오류가 발생했습니다."),

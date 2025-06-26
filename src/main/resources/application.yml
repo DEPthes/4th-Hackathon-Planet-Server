@@ -22,3 +22,6 @@ file:
 
 jwt:
   secret: testadsadsffsdahjkafsdhjkldsfahkj12123132fdsa12123
+
+gemini:
+  apiKey: ${GEMINI_API_KEY}

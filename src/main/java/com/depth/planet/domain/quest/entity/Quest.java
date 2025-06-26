@@ -2,6 +2,7 @@ package com.depth.planet.domain.quest.entity;
 
 import com.depth.planet.common.auditor.TimeStampedEntity;
 import com.depth.planet.domain.file.entity.EvidenceImage;
+import com.depth.planet.domain.quest.dto.QuestDto;
 import com.depth.planet.domain.user.entity.User;
 import jakarta.persistence.*;
 import lombok.*;
@@ -32,6 +33,14 @@ public class Quest extends TimeStampedEntity {
     private Boolean isCompleted = false;
 
     private LocalDateTime completedAt;
+
+    public static Quest of(QuestDto.QuestSuggestionResponse suggestion, User user) {
+        return Quest.builder()
+                .title(suggestion.getTitle())
+                .encouragement(suggestion.getEncouragement())
+                .user(user)
+                .build();
+    }
 
     public void complete() {
         this.completedAt = LocalDateTime.now();
