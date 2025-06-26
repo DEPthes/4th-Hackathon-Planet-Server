@@ -18,4 +18,4 @@ spring:
 logging:
   level:
     org.hibernate.SQL: off
-    org.hibernate.type: off # 실제 들어가는 파라미터값 찍어주는 설정
+    org.hibernate.type: off # 실제 들어가는 파라미터값 찍어주는 설정––
