@@ -6,6 +6,7 @@ import com.depth.planet.domain.user.entity.User;
 import com.depth.planet.domain.user.entity.enums.GenderType;
 import com.depth.planet.domain.user.entity.enums.MBTI;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -17,15 +18,21 @@ public class UserDto {
     @NoArgsConstructor
     @Data
     @Builder
+    @Schema(description = "회원 정보 수정 요청 DTO")
     public static class UserUpdateRequest {
+        @Schema(description = "수정할 비밀번호", example = "newPassword123")
         private String password;
 
+        @Schema(description = "수정할 이름", example = "김철수")
         private String name;
 
+        @Schema(description = "수정할 MBTI", example = "INFP")
         private MBTI mbti;
 
+        @Schema(description = "수정할 성별", example = "MALE")
         private GenderType gender;
 
+        @Schema(description = "수정할 취미 목록", example = "[\"영화감상\", \"게임\"]")
         private List<String> hobbies;
     }
 
@@ -33,15 +40,21 @@ public class UserDto {
     @NoArgsConstructor
     @Data
     @Builder
+    @Schema(description = "회원 정보 응답 DTO")
     public static class UserResponse {
+        @Schema(description = "사용자 이메일", example = "test@example.com")
         private String email;
 
+        @Schema(description = "사용자 이름", example = "홍길동")
         private String name;
 
+        @Schema(description = "사용자 MBTI", example = "ENTJ")
         private MBTI mbti;
 
+        @Schema(description = "사용자 성별", example = "MALE")
         private GenderType gender;
 
+        @Schema(description = "사용자 취미 목록", example = "[\"등산\", \"독서\"]")
         private List<String> hobbies;
 
         public static UserResponse from(User user) {
