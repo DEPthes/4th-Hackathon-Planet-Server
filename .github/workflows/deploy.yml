@@ -87,6 +87,7 @@ jobs:
           ssh -i ./private-key.pem -p "${{ secrets.SERVER_PORT }}" "${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}" << EOF
             # 배포 디렉토리로 이동
             cd "${{ secrets.DEPLOY_PATH }}"
+            echo "Deploy path: ${{ secrets.DEPLOY_PATH }}"
 
             # Dockerfile과 JAR 파일을 사용하여 원격 서버에서 Docker 이미지 빌드
             echo "Building Docker image on remote server..."
