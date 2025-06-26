@@ -1,15 +1,20 @@
 package com.depth.planet.domain.quest.service;
 
+import com.depth.planet.domain.quest.dto.TierDto;
 import com.depth.planet.domain.quest.repository.UserTierRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 @RequiredArgsConstructor
 public class UserTierService {
     private final UserTierRepository userTierRepository;
 
-    //TODO: 유저에게 exp 추가하는 메서드(exp가 갱신됐을때 현재 exp양에 따라 티어도 갱신될 수 있음)
+    public TierDto.TierResponse addExpToUser(String email, int exp) {
+        return null;
+    }
 
     //TODO: 유저의 이번달 티어를 가져오는 메서드
 
