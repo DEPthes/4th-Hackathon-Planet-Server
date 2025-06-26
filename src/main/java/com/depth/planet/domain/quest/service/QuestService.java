@@ -139,4 +139,28 @@ public class QuestService {
 
         return QuestDto.QuestResponse.from(quest);
     }
+
+    public void deleteAllQuestsByUser(UserDetails user) {
+        // 해당 유저의 모든 퀘스트 조회 (evidenceImage join)
+        List<Quest> userQuests = questQueryRepository.findAllByUser(user);
+
+        if (userQuests.isEmpty()) {
+            return;
+        }
+
+        // 각 퀘스트의 증거 이미지 삭제 (실제 파일 시스템에서)
+        for (Quest quest : userQuests) {
+            if (quest.getEvidenceImage() != null) {
+                try {
+                    fileSystemHandler.deleteFile(quest.getEvidenceImage());
+                } catch (Exception e) {
+                    // 파일 삭제 실패해도 DB 삭제는 진행
+                    // 로그 기록 (필요시 logger 추가)
+                }
+            }
+        }
+
+        // 퀘스트 삭제 (cascade로 연관 엔티티들도 삭제됨)
+        questRepository.deleteAll(userQuests);
+    }
 }

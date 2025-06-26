@@ -1,14 +1,27 @@
 package com.depth.planet.domain.quest.entity;
 
+import java.time.LocalDateTime;
+
 import com.depth.planet.common.auditor.TimeStampedEntity;
 import com.depth.planet.domain.file.entity.EvidenceImage;
 import com.depth.planet.domain.quest.dto.QuestDto;
 import com.depth.planet.domain.user.entity.User;
-import jakarta.persistence.*;
-import lombok.*;
-import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDateTime;
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
 @Entity
 @AllArgsConstructor
@@ -17,7 +30,8 @@ import java.time.LocalDateTime;
 @Setter
 @SuperBuilder
 public class Quest extends TimeStampedEntity {
-    @Id @Setter(AccessLevel.NONE)
+    @Id
+    @Setter(AccessLevel.NONE)
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -48,6 +62,6 @@ public class Quest extends TimeStampedEntity {
         this.isCompleted = true;
     }
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
     private EvidenceImage evidenceImage;
 }

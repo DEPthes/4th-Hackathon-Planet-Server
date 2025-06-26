@@ -3,10 +3,10 @@ package com.depth.planet.domain.quest.controller;
 import java.time.LocalDate;
 import java.util.List;
 
-import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -85,5 +85,13 @@ public class QuestController {
       @ModelAttribute @Valid QuestDto.CompleteQuestRequest request,
       @Parameter(hidden = true) @AuthenticationPrincipal UserDetails user) {
     return questService.completeQuest(questId, request, user);
+  }
+
+  @DeleteMapping("/my/all")
+  @Operation(summary = "내 모든 퀘스트 삭제", description = "현재 로그인한 유저의 모든 퀘스트를 삭제합니다. 연관된 이미지 파일도 함께 삭제됩니다.")
+  @ApiResponse(responseCode = "200", description = "모든 퀘스트 삭제 성공")
+  public void deleteAllMyQuests(
+      @Parameter(hidden = true) @AuthenticationPrincipal UserDetails user) {
+    questService.deleteAllQuestsByUser(user);
   }
 }
