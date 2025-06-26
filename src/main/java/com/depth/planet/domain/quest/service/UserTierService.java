@@ -15,9 +15,11 @@ import com.depth.planet.system.exception.model.ErrorCode;
 import com.depth.planet.system.exception.model.RestException;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class UserTierService {
     private final UserTierRepository userTierRepository;
     private final UserRepository userRepository;
@@ -104,6 +106,7 @@ public class UserTierService {
                         .tier(TierType.TinyStar)
                         .experiencePoint(0L)
                         .build());
+
         return TierDto.TierResponse.from(userTier);
     }
 }
