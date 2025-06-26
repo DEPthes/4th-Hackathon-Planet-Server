@@ -5,6 +5,7 @@ import com.depth.planet.domain.user.dto.UserDto.UserResponse;
 import com.depth.planet.domain.user.repository.UserRepository;
 import com.depth.planet.system.exception.model.ErrorCode;
 import com.depth.planet.system.exception.model.RestException;
+import com.depth.planet.system.security.model.UserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,7 +16,7 @@ public class UserService {
     private final UserRepository userRepository;
 
     @Transactional
-    public UserDto.UserResponse registerUser(UserDto.UserRegisterRequest request) {
+    public UserDto.UserResponse updateUser(String email, UserDto.UserUpdateRequest request, UserDetails user) {
         //TODO: not implemented
         return null;
     }

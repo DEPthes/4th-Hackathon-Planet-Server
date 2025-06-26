@@ -4,43 +4,49 @@ package com.depth.planet.system.exception.handler;
 import com.depth.planet.system.exception.dto.ErrorDto;
 import com.depth.planet.system.exception.model.ErrorCode;
 import com.depth.planet.system.exception.model.RestException;
+import com.depth.planet.system.security.exception.JwtAuthenticationException;
+import com.depth.planet.system.security.exception.JwtTokenExpiredException;
+import com.depth.planet.system.security.exception.JwtTokenMissingException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageConversionException;
 import org.springframework.validation.BindException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.util.Collections;
 import java.util.stream.Collectors;
 
 @RestControllerAdvice
 @Slf4j
 public class GlobalExceptionHandler {
-//    @ExceptionHandler({JwtTokenMissingException.class})
-//    public ResponseEntity<ErrorDto.ErrorResponse> handleJwtTokenMissingException() {
-//
-//        return ResponseEntity
-//                .status(HttpStatus.UNAUTHORIZED)
-//                .body(ErrorDto.ErrorResponse.from(ErrorCode.AUTH_TOKEN_NOT_FOUND));
-//    }
-//
-//    @ExceptionHandler({JwtTokenExpiredException.class})
-//    public ResponseEntity<ErrorDto.ErrorResponse> handleJwtTokenExpiredException() {
-//
-//        return ResponseEntity
-//                .status(HttpStatus.UNAUTHORIZED)
-//                .body(ErrorDto.ErrorResponse.from(ErrorCode.AUTH_TOKEN_EXPIRED));
-//    }
-//
-//    @ExceptionHandler({JwtAuthenticationException.class})
-//    public ResponseEntity<ErrorDto.ErrorResponse> handleJwtAuthenticationException() {
-//
-//        return ResponseEntity
-//                .status(HttpStatus.UNAUTHORIZED)
-//                .body(ErrorDto.ErrorResponse.from(ErrorCode.AUTH_TOKEN_INVALID));
-//    }
+    @ExceptionHandler({JwtTokenMissingException.class})
+    public ResponseEntity<ErrorDto.ErrorResponse> handleJwtTokenMissingException() {
+
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(ErrorDto.ErrorResponse.from(ErrorCode.AUTH_TOKEN_NOT_FOUND));
+    }
+
+    @ExceptionHandler({JwtTokenExpiredException.class})
+    public ResponseEntity<ErrorDto.ErrorResponse> handleJwtTokenExpiredException() {
+
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(ErrorDto.ErrorResponse.from(ErrorCode.AUTH_TOKEN_EXPIRED));
+    }
+
+    @ExceptionHandler({JwtAuthenticationException.class})
+    public ResponseEntity<ErrorDto.ErrorResponse> handleJwtAuthenticationException() {
+
+        return ResponseEntity
+                .status(HttpStatus.UNAUTHORIZED)
+                .body(ErrorDto.ErrorResponse.from(ErrorCode.AUTH_TOKEN_INVALID));
+    }
 
     @ExceptionHandler({HttpMessageConversionException.class})
     public ResponseEntity<ErrorDto.ErrorResponse> handleRestException() {
@@ -69,30 +75,30 @@ public class GlobalExceptionHandler {
                 ));
     }
 
-//    @ExceptionHandler({HttpRequestMethodNotSupportedException.class})
-//    public ResponseEntity<ErrorDto.ErrorResponse> handleMethodNotSupportedException() {
-//
-//        return ResponseEntity
-//                .status(HttpStatus.METHOD_NOT_ALLOWED)
-//                .body(ErrorDto.ErrorResponse.from(ErrorCode.GLOBAL_METHOD_NOT_ALLOWED));
-//    }
-//
-//    @ExceptionHandler({MissingServletRequestParameterException.class})
-//    public ResponseEntity<ErrorDto.ErrorResponse> handleMissingServletRequestParameterException(MissingServletRequestParameterException exception) {
-//        return ResponseEntity
-//                .status(HttpStatus.BAD_REQUEST)
-//                .body(
-//                        ErrorDto.ValidationErrorResponse.of(
-//                                ErrorCode.GLOBAL_INVALID_PARAMETER,
-//                                Collections.singletonList(
-//                                        ErrorDto.ValidationErrorResponse.FieldError.builder()
-//                                                .field(exception.getParameterName())
-//                                                .message(exception.getMessage())
-//                                                .build()
-//                                )
-//                        )
-//                );
-//    }
+    @ExceptionHandler({HttpRequestMethodNotSupportedException.class})
+    public ResponseEntity<ErrorDto.ErrorResponse> handleMethodNotSupportedException() {
+
+        return ResponseEntity
+                .status(HttpStatus.METHOD_NOT_ALLOWED)
+                .body(ErrorDto.ErrorResponse.from(ErrorCode.GLOBAL_METHOD_NOT_ALLOWED));
+    }
+
+    @ExceptionHandler({MissingServletRequestParameterException.class})
+    public ResponseEntity<ErrorDto.ErrorResponse> handleMissingServletRequestParameterException(MissingServletRequestParameterException exception) {
+        return ResponseEntity
+                .status(HttpStatus.BAD_REQUEST)
+                .body(
+                        ErrorDto.ValidationErrorResponse.of(
+                                ErrorCode.GLOBAL_INVALID_PARAMETER,
+                                Collections.singletonList(
+                                        ErrorDto.ValidationErrorResponse.FieldError.builder()
+                                                .field(exception.getParameterName())
+                                                .message(exception.getMessage())
+                                                .build()
+                                )
+                        )
+                );
+    }
 
     @ExceptionHandler({RestException.class})
     public ResponseEntity<ErrorDto.ErrorResponse> handleRestException(RestException exception) {

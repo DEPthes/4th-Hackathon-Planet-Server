@@ -17,9 +17,7 @@ public class UserDto {
     @NoArgsConstructor
     @Data
     @Builder
-    public static class UserRegisterRequest {
-        private String email;
-
+    public static class UserUpdateRequest {
         private String password;
 
         private String name;
@@ -29,15 +27,6 @@ public class UserDto {
         private GenderType gender;
 
         private List<String> hobbies;
-
-        public User toEntity() {
-            return User.builder()
-                    .email(email)
-                    .mbti(mbti)
-                    .gender(gender)
-                    .hobbies(hobbies)
-                    .build();
-        }
     }
 
     @AllArgsConstructor
