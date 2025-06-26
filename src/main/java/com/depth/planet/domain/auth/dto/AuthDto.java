@@ -82,7 +82,7 @@ public class AuthDto {
         @Schema(description = "사용자 MBTI 유형", example = "ENTJ")
         private MBTI mbti;
 
-        @Schema(description = "사용자 성별", example = "MALE")
+        @Schema(description = "사용자 성별", example = "Male")
         private GenderType gender;
 
         @Schema(description = "사용자 취미 목록", example = "[\"등산\", \"독서\"]")
