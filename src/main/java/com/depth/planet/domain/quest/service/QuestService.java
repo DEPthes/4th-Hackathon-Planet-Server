@@ -5,6 +5,7 @@ import com.depth.planet.domain.file.handler.FileSystemHandler;
 import com.depth.planet.domain.file.repository.AttachedFileRepository;
 import com.depth.planet.domain.quest.dto.QuestDto;
 import com.depth.planet.domain.quest.entity.Quest;
+import com.depth.planet.domain.quest.repository.QuestQueryRepository;
 import com.depth.planet.domain.quest.repository.QuestRepository;
 import com.depth.planet.system.exception.model.ErrorCode;
 import com.depth.planet.system.exception.model.RestException;
@@ -14,27 +15,30 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
 public class QuestService {
     private final FileSystemHandler fileSystemHandler;
     private final AttachedFileRepository attachedFileRepository;
-    private QuestRepository questRepository;
+    private final QuestRepository questRepository;
+    private final QuestQueryRepository questQueryRepository;
 
-    public List<Quest> findMyQuestsBetween(LocalDate startDate, LocalDate endDate, UserDetails user) {
-        // 특정 기간 동안의 퀘스트 조회 (이미 했던)
-        //TODO: not yet implemented
-        return null;
+    public List<QuestDto.QuestResponse> findMyQuestsBetween(LocalDate startDate, LocalDate endDate, UserDetails user) {
+        List<Quest> result = questQueryRepository.findBetween(startDate, endDate, user);
+        return result.stream()
+                .map(QuestDto.QuestResponse::from)
+                .toList();
     }
 
     //TODO: 퀘스트 제안 생성
 
     //TODO: 퀘스트 제안 수락
 
-    public Quest findMyQuestToday(UserDetails user) {
-        // 오늘의 퀘스트 조회 (오늘 할)
-        return null; // TODO: not yet implemented
+    public QuestDto.QuestResponse findMyQuestToday(UserDetails user) {
+        Quest result = questQueryRepository.findToday(user).orElseThrow(() -> new RestException(ErrorCode.GLOBAL_NOT_FOUND));
+        return QuestDto.QuestResponse.from(result);
     }
 
 
