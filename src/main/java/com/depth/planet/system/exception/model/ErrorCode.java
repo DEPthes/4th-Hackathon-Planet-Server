@@ -44,8 +44,12 @@ public enum ErrorCode {
     FILE_NOT_FOUND(404, "파일을 찾을 수 없습니다."),
     FILE_NOT_IMAGE(400, "이미지 파일이 아닙니다."),
 
+    // Quest
+    QUEST_ALREADY_COMPLETED(400, "이미 완료된 퀘스트입니다."),
+
     // Other
-    INTERNAL_SERVER_ERROR(500, "오류가 발생했습니다."), ;
+    INTERNAL_SERVER_ERROR(500, "오류가 발생했습니다."),
+    ;
 
     private final int statusCode;
     private final String message;

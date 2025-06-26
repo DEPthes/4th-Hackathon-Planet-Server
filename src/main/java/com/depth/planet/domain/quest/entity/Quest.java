@@ -1,13 +1,13 @@
 package com.depth.planet.domain.quest.entity;
 
 import com.depth.planet.common.auditor.TimeStampedEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import com.depth.planet.domain.file.entity.EvidenceImage;
+import com.depth.planet.domain.user.entity.User;
+import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -24,6 +24,9 @@ public class Quest extends TimeStampedEntity {
 
     private String encouragement;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User user;
+
     @Builder.Default
     private Boolean isCompleted = false;
 
@@ -34,5 +37,6 @@ public class Quest extends TimeStampedEntity {
         this.isCompleted = true;
     }
 
-    //TODO: 인증샷 파일 저장
+    @OneToOne(fetch = FetchType.LAZY)
+    private EvidenceImage evidenceImage;
 }

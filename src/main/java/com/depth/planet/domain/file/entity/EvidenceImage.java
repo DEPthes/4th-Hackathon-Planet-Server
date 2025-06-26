@@ -2,16 +2,15 @@ package com.depth.planet.domain.file.entity;
 
 import com.depth.planet.domain.file.entity.enums.FileType;
 import com.depth.planet.domain.quest.entity.Quest;
-import jakarta.persistence.DiscriminatorValue;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 import org.springframework.web.multipart.MultipartFile;
+
+import java.util.UUID;
 
 @Entity
 @Getter
@@ -21,7 +20,7 @@ import org.springframework.web.multipart.MultipartFile;
 @NoArgsConstructor
 @DiscriminatorValue("EVIDENCE_IMAGE")
 public class EvidenceImage extends AttachedFile{
-    @ManyToOne(fetch = FetchType.LAZY)
+    @OneToOne(fetch = FetchType.LAZY)
     private Quest quest;
 
     public static EvidenceImage from(MultipartFile file, Quest quest) {
@@ -29,7 +28,7 @@ public class EvidenceImage extends AttachedFile{
             return null;
         }
         return EvidenceImage.builder()
-                .id(file.getOriginalFilename()) // Assuming the ID is the filename for simplicity
+                .id(UUID.randomUUID().toString())
                 .fileName(file.getOriginalFilename())
                 .size(file.getSize())
                 .fileType(FileType.IMAGE)
