@@ -17,5 +17,8 @@ logging:
 server:
   port: 8080
 
+file:
+  save-path: ./uploaded
+
 jwt:
   secret: testadsadsffsdahjkafsdhjkldsfahkj12123132fdsa12123
