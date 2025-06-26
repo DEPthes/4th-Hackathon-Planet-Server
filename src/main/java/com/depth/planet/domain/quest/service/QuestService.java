@@ -38,6 +38,7 @@ public class QuestService {
     private final QuestGenerateService questGenerateService;
     private final QuestFeedbackGenerateService questFeedbackGenerateService;
     private final EncouragementGenerateService encouragementGenerateService;
+    private final UserTierService userTierService;
 
     public List<QuestDto.QuestResponse> findMyQuestsBetween(LocalDate startDate, LocalDate endDate, UserDetails user) {
         List<Quest> result = questQueryRepository.findBetween(startDate, endDate, user);
@@ -118,15 +119,22 @@ public class QuestService {
 
         quest.complete();
 
+        // 증거 이미지 처리 및 경험치 계산
+        boolean hasEvidenceImage = false;
         if (request.getEvidenceImage() != null) {
             EvidenceImage toSave = EvidenceImage.from(request.getEvidenceImage(), quest);
             fileSystemHandler.saveFile(request.getEvidenceImage(), toSave);
             EvidenceImage saved = attachedFileRepository.save(toSave);
             quest.setEvidenceImage(saved);
+            hasEvidenceImage = true;
         }
 
         String feedback = questFeedbackGenerateService.generateQuestFeedback(quest);
         quest.setFeedback(feedback);
+
+        // 경험치 추가: 사진 업로드 시 +30, 미업로드 시 +20
+        int expToAdd = hasEvidenceImage ? 30 : 20;
+        userTierService.addExpToUser(user.getUser().getEmail(), expToAdd);
 
         return QuestDto.QuestResponse.from(quest);
     }
