@@ -2,8 +2,10 @@ package com.depth.planet.domain.quest.entity;
 
 import com.depth.planet.domain.quest.entity.embeddable.UserTierId;
 import com.depth.planet.domain.quest.entity.enums.TierType;
-import com.depth.planet.domain.user.entity.User;
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Id;
 import lombok.*;
 
 @Entity
