@@ -25,6 +25,7 @@ public class User {
     private String name;
 
     //======= 유저 성향 ==========
+    @Enumerated(EnumType.STRING)
     private MBTI mbti;
 
     @Enumerated(EnumType.STRING)
