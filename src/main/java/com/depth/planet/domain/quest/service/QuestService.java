@@ -1,6 +1,7 @@
 package com.depth.planet.domain.quest.service;
 
 import com.depth.planet.domain.ai.llm.dto.AiQuestDto;
+import com.depth.planet.domain.ai.llm.service.QuestFeedbackGenerateService;
 import com.depth.planet.domain.ai.llm.service.QuestGenerateService;
 import com.depth.planet.domain.file.entity.EvidenceImage;
 import com.depth.planet.domain.file.handler.FileSystemHandler;
@@ -30,6 +31,7 @@ public class QuestService {
     private final QuestQueryRepository questQueryRepository;
     private final QuestSuggestionHolder questSuggestionHolder;
     private final QuestGenerateService questGenerateService;
+    private final QuestFeedbackGenerateService questFeedbackGenerateService;
 
     public List<QuestDto.QuestResponse> findMyQuestsBetween(LocalDate startDate, LocalDate endDate, UserDetails user) {
         List<Quest> result = questQueryRepository.findBetween(startDate, endDate, user);
@@ -107,6 +109,9 @@ public class QuestService {
             EvidenceImage saved = attachedFileRepository.save(toSave);
             quest.setEvidenceImage(saved);
         }
+
+        String feedback = questFeedbackGenerateService.generateQuestFeedback(quest);
+        quest.setFeedback(feedback);
 
         return QuestDto.QuestResponse.from(quest);
     }

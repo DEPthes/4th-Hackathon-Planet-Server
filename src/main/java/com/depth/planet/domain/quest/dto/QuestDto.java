@@ -48,6 +48,9 @@ public class QuestDto {
         @Schema(description = "증거 이미지 정보")
         private FileDto.FileResponse evidenceImage;
 
+        @Schema(description = "AI 피드백", example = "3줄정도 분량의 AI가 이미지를 보고 피드백한 메시지")
+        private String feedback;
+
         public static QuestResponse from(Quest quest) {
             return QuestResponse.builder()
                     .id(quest.getId())
@@ -58,6 +61,7 @@ public class QuestDto {
                     .createdAt(quest.getCreatedAt())
                     .lastModifiedAt(quest.getLastModifiedAt())
                     .evidenceImage(FileDto.FileResponse.from(quest.getEvidenceImage()))
+                    .feedback(quest.getFeedback())
                     .build();
         }
     }

@@ -34,6 +34,8 @@ public class Quest extends TimeStampedEntity {
 
     private LocalDateTime completedAt;
 
+    private String feedback;
+
     public static Quest of(QuestDto.QuestSuggestionResponse suggestion, User user) {
         return Quest.builder()
                 .title(suggestion.getTitle())
