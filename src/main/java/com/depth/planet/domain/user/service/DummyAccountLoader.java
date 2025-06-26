@@ -12,9 +12,11 @@ import com.depth.planet.domain.user.entity.enums.MBTI;
 import com.depth.planet.domain.user.repository.UserRepository;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 
 @Service
 @RequiredArgsConstructor
+@Slf4j
 public class DummyAccountLoader implements CommandLineRunner {
     private final UserRepository userRepository;
 
@@ -35,5 +37,6 @@ public class DummyAccountLoader implements CommandLineRunner {
                 .build();
 
         userRepository.save(admin);
+        log.info("Dummy account created: {}", admin.getEmail());
     }
 }
