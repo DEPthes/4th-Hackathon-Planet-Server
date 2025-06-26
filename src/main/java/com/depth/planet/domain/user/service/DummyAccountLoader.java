@@ -2,6 +2,7 @@ package com.depth.planet.domain.user.service;
 
 import java.util.List;
 
+import com.depth.planet.domain.user.entity.enums.AgeGroup;
 import com.depth.planet.domain.user.entity.enums.Role;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -37,6 +38,7 @@ public class DummyAccountLoader implements CommandLineRunner {
                 .mbti(MBTI.ENFJ)
                 .gender(GenderType.Male)
                 .role(Role.Admin)
+                .ageGroup(AgeGroup.Twenties)
                 .hobbies(List.of("독서", "코딩", "영화감상"))
                 .password(passwordEncoder.encode("root"))
                 .build();

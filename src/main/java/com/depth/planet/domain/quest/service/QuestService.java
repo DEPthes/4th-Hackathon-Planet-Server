@@ -58,7 +58,8 @@ public class QuestService {
                 .generateQuestSuggestions(
                         currentUser.getMbti().name(),
                         currentUser.getGender().name(),
-                        hobbies);
+                        hobbies,
+                        currentUser.getAgeGroup().name());
 
         if (generatedAiSuggestions.isEmpty()) {
             throw new RestException(ErrorCode.QUEST_SUGGESTION_NOT_FOUND);
