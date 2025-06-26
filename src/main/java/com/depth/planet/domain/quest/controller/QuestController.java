@@ -77,7 +77,7 @@ public class QuestController {
     return questService.findMyQuestToday(user);
   }
 
-  @PutMapping(value = "/{questId}/complete", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+  @PutMapping(value = "/{questId}/complete")
   @Operation(summary = "퀘스트 완료", description = "퀘스트를 완료 처리하고 증거 이미지를 업로드합니다. (증거 이미지는 선택 사항)")
   @ApiResponse(responseCode = "200", description = "퀘스트 완료 성공")
   public QuestDto.QuestResponse completeQuest(
