@@ -1,6 +1,5 @@
 package com.depth.planet.system.exception.model;
 
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -46,6 +45,7 @@ public enum ErrorCode {
 
     // Quest
     QUEST_ALREADY_COMPLETED(400, "이미 완료된 퀘스트입니다."),
+    QUEST_ALREADY_APPROVED_TODAY(400, "오늘 이미 승인한 퀘스트가 있습니다."),
     QUEST_SUGGESTION_NOT_FOUND(404, "퀘스트 제안을 찾을 수 없습니다."),
     QUEST_SUGGESTION_SIZE_MISMATCH(400, "퀘스트 제안의 개수가 일치하지 않습니다."),
     QUEST_NOT_COMPLETED(400, "퀘스트가 완료되지 않았습니다."),
