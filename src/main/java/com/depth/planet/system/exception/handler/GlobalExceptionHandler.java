@@ -41,7 +41,8 @@ public class GlobalExceptionHandler {
     }
 
     @ExceptionHandler({JwtAuthenticationException.class})
-    public ResponseEntity<ErrorDto.ErrorResponse> handleJwtAuthenticationException() {
+    public ResponseEntity<ErrorDto.ErrorResponse> handleJwtAuthenticationException(JwtAuthenticationException e) {
+        log.error("{Jwt Authentication Exception}: {}", e.getMessage());
 
         return ResponseEntity
                 .status(HttpStatus.UNAUTHORIZED)

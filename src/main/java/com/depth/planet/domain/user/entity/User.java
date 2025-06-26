@@ -32,6 +32,6 @@ public class User {
     private GenderType gender;
 
     @Builder.Default
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.EAGER)
     private List<String> hobbies = new ArrayList<>();
 }
