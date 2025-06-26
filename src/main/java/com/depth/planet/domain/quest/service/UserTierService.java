@@ -70,6 +70,41 @@ public class UserTierService {
     }
 
     // TODO: 유저의 이번달 티어를 가져오는 메서드
+    public TierDto.TierResponse findThisMonthTier(String email) {
+        User user = userRepository.findById(email)
+                .orElseThrow(() -> new RestException(ErrorCode.GLOBAL_NOT_FOUND));
 
+        UserTierId userTierId = UserTierId.builder()
+                .user(user)
+                .year(LocalDate.now().getYear())
+                .month(LocalDate.now().getMonthValue())
+                .build();
+
+        UserTier userTier = userTierRepository.findById(userTierId)
+                .orElse(UserTier.builder()
+                        .id(userTierId)
+                        .tier(TierType.TinyStar)
+                        .experiencePoint(0L)
+                        .build());
+        return TierDto.TierResponse.from(userTier);
+    }
     // TODO: 유저의 특정 달 티어를 가져오는 메서드
+    public TierDto.TierResponse findSpecificMonthTier(String email,Integer year,Integer month) {
+        User user = userRepository.findById(email)
+                .orElseThrow(() -> new RestException(ErrorCode.GLOBAL_NOT_FOUND));
+
+        UserTierId userTierId = UserTierId.builder()
+                .user(user)
+                .year(year)
+                .month(month)
+                .build();
+
+        UserTier userTier = userTierRepository.findById(userTierId)
+                .orElse(UserTier.builder()
+                        .id(userTierId)
+                        .tier(TierType.TinyStar)
+                        .experiencePoint(0L)
+                        .build());
+        return TierDto.TierResponse.from(userTier);
+    }
 }
