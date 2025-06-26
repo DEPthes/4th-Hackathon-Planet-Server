@@ -5,6 +5,7 @@ import com.depth.planet.domain.user.entity.enums.MBTI;
 import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 import lombok.*;
 
 import java.util.ArrayList;
@@ -16,6 +17,7 @@ import java.util.List;
 @Builder
 @Getter
 @Setter
+@Table(name = "USER_ACCOUNT")
 public class User {
     //====== 유저 기본정보 ========
     @Id @Setter(AccessLevel.NONE)

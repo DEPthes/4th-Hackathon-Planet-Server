@@ -16,3 +16,6 @@ logging:
 
 server:
   port: 8080
+
+jwt:
+  secret: testadsadsffsdahjkafsdhjkldsfahkj12123132fdsa12123
