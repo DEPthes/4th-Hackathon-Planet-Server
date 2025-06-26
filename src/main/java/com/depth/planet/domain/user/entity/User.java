@@ -1,6 +1,5 @@
 package com.depth.planet.domain.user.entity;
 
-import com.depth.planet.domain.user.entity.enums.AgeGroup;
 import com.depth.planet.domain.user.entity.enums.GenderType;
 import com.depth.planet.domain.user.entity.enums.MBTI;
 import com.depth.planet.domain.user.entity.enums.Role;
@@ -40,7 +39,4 @@ public class User {
     @Builder.Default
     @ElementCollection(fetch = FetchType.EAGER)
     private List<String> hobbies = new ArrayList<>();
-
-    @Enumerated(EnumType.STRING)
-    private AgeGroup ageGroup;
 }

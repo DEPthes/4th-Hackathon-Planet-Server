@@ -2,7 +2,6 @@ package com.depth.planet.domain.auth.dto;
 
 import com.depth.planet.domain.user.dto.UserDto;
 import com.depth.planet.domain.user.entity.User;
-import com.depth.planet.domain.user.entity.enums.AgeGroup;
 import com.depth.planet.domain.user.entity.enums.GenderType;
 import com.depth.planet.domain.user.entity.enums.MBTI;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -89,16 +88,12 @@ public class AuthDto {
         @Schema(description = "사용자 취미 목록", example = "[\"등산\", \"독서\"]")
         private List<String> hobbies;
 
-        @Schema(description = "사용자 연령대", example = "Teenager")
-        private AgeGroup ageGroup;
-
         public User toEntity(PasswordEncoder passwordEncoder) {
             return User.builder()
                     .email(email)
                     .name(name)
                     .mbti(mbti)
                     .gender(gender)
-                    .ageGroup(ageGroup)
                     .hobbies(hobbies)
                     .password(passwordEncoder.encode(password))
                     .build();

@@ -3,7 +3,6 @@ package com.depth.planet.domain.user.dto;
 import java.util.List;
 
 import com.depth.planet.domain.user.entity.User;
-import com.depth.planet.domain.user.entity.enums.AgeGroup;
 import com.depth.planet.domain.user.entity.enums.GenderType;
 import com.depth.planet.domain.user.entity.enums.MBTI;
 
@@ -36,9 +35,6 @@ public class UserDto {
 
         @Schema(description = "수정할 취미 목록", example = "[\"영화감상\", \"게임\"]")
         private List<String> hobbies;
-
-        @Schema(description = "수정할 연령대", example = "Adult")
-        private AgeGroup ageGroup;
     }
 
     @AllArgsConstructor
@@ -65,16 +61,12 @@ public class UserDto {
         @Schema(description = "사용자 취미 목록", example = "[\"등산\", \"독서\"]")
         private List<String> hobbies;
 
-        @Schema(description = "사용자 연령대", example = "Teenager")
-        private AgeGroup ageGroup;
-
         public static UserResponse from(User user) {
             return UserResponse.builder()
                     .email(user.getEmail())
                     .name(user.getName())
                     .mbti(user.getMbti())
                     .gender(user.getGender())
-                    .role(user.getRole())
                     .hobbies(user.getHobbies())
                     .build();
         }
