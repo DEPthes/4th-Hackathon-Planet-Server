@@ -2,6 +2,7 @@ package com.depth.planet.domain.user.entity;
 
 import com.depth.planet.domain.user.entity.enums.GenderType;
 import com.depth.planet.domain.user.entity.enums.MBTI;
+import com.depth.planet.domain.user.entity.enums.Role;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -23,6 +24,10 @@ public class User {
     private String password;
 
     private String name;
+
+    @Enumerated(EnumType.STRING)
+    @Builder.Default
+    private Role role = Role.User;
 
     //======= 유저 성향 ==========
     @Enumerated(EnumType.STRING)

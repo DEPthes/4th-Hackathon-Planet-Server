@@ -6,6 +6,7 @@ import com.depth.planet.domain.user.entity.User;
 import com.depth.planet.domain.user.entity.enums.GenderType;
 import com.depth.planet.domain.user.entity.enums.MBTI;
 
+import com.depth.planet.domain.user.entity.enums.Role;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -29,7 +30,7 @@ public class UserDto {
         @Schema(description = "수정할 MBTI", example = "INFP")
         private MBTI mbti;
 
-        @Schema(description = "수정할 성별", example = "MALE")
+        @Schema(description = "수정할 성별", example = "Male")
         private GenderType gender;
 
         @Schema(description = "수정할 취미 목록", example = "[\"영화감상\", \"게임\"]")
@@ -48,10 +49,13 @@ public class UserDto {
         @Schema(description = "사용자 이름", example = "홍길동")
         private String name;
 
+        @Schema(description = "사용자 권한", example = "User, Admin")
+        private Role role;
+
         @Schema(description = "사용자 MBTI", example = "ENTJ")
         private MBTI mbti;
 
-        @Schema(description = "사용자 성별", example = "MALE")
+        @Schema(description = "사용자 성별", example = "Male")
         private GenderType gender;
 
         @Schema(description = "사용자 취미 목록", example = "[\"등산\", \"독서\"]")
