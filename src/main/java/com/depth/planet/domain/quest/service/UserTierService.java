@@ -69,7 +69,6 @@ public class UserTierService {
         return currentTier;
     }
 
-    // TODO: 유저의 이번달 티어를 가져오는 메서드
     public TierDto.TierResponse findThisMonthTier(String email) {
         User user = userRepository.findById(email)
                 .orElseThrow(() -> new RestException(ErrorCode.GLOBAL_NOT_FOUND));
@@ -88,7 +87,7 @@ public class UserTierService {
                         .build());
         return TierDto.TierResponse.from(userTier);
     }
-    // TODO: 유저의 특정 달 티어를 가져오는 메서드
+
     public TierDto.TierResponse findSpecificMonthTier(String email,Integer year,Integer month) {
         User user = userRepository.findById(email)
                 .orElseThrow(() -> new RestException(ErrorCode.GLOBAL_NOT_FOUND));
