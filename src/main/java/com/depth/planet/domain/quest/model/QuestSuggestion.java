@@ -16,7 +16,6 @@ import java.time.LocalDateTime;
 public class QuestSuggestion {
     private String uuid;
     private String title;
-    private String encouragement;
 
     private LocalDateTime createdAt;
     private String requesterEmail;
@@ -25,7 +24,6 @@ public class QuestSuggestion {
         return QuestSuggestion.builder()
                 .uuid(java.util.UUID.randomUUID().toString())
                 .title(suggestion.getTitle())
-                .encouragement(suggestion.getEncouragement())
                 .createdAt(LocalDateTime.now())
                 .requesterEmail(requester.getEmail())
                 .build();

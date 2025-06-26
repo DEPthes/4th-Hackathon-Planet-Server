@@ -78,9 +78,6 @@ public class QuestDto {
         @Schema(description = "제안된 퀘스트 제목", example = "책 한 챕터 읽기")
         private String title;
 
-        @Schema(description = "격려 메시지", example = "새로운 지식을 얻는 즐거운 시간을 가져보세요!")
-        private String encouragement;
-
         @Schema(description = "제안 생성 일시", example = "2024-01-15T09:00:00")
         private LocalDateTime createdAt;
 
@@ -91,7 +88,6 @@ public class QuestDto {
             return QuestSuggestionResponse.builder()
                     .uuid(questSuggestion.getUuid())
                     .title(questSuggestion.getTitle())
-                    .encouragement(questSuggestion.getEncouragement())
                     .createdAt(questSuggestion.getCreatedAt())
                     .requesterEmail(questSuggestion.getRequesterEmail())
                     .build();

@@ -39,7 +39,7 @@ public class Quest extends TimeStampedEntity {
     public static Quest of(QuestDto.QuestSuggestionResponse suggestion, User user) {
         return Quest.builder()
                 .title(suggestion.getTitle())
-                .encouragement(suggestion.getEncouragement())
+//                .encouragement(suggestion.getEncouragement())
                 .user(user)
                 .build();
     }
