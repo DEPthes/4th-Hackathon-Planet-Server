@@ -1,6 +1,6 @@
 spring:
   profiles:
-    active: remote
+    active: local
   main:
     allow-bean-definition-overriding: true
   servlet:
@@ -16,12 +16,3 @@ logging:
 
 server:
   port: 8080
-
-jwt:
-  secret: testadsadsffsdahjkafsdhjkldsfahkj12123132fdsa12123
-
-file:
-  save-path: ./uploaded
-
-gemini:
-  apiKey: ${GEMINI_API_KEY}
