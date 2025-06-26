@@ -9,7 +9,6 @@ import lombok.*;
 import lombok.experimental.SuperBuilder;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
 @Entity
 @AllArgsConstructor
@@ -36,10 +35,10 @@ public class Quest extends TimeStampedEntity {
 
     private String feedback;
 
-    public static Quest of(QuestDto.QuestSuggestionResponse suggestion, User user) {
+    public static Quest of(QuestDto.QuestSuggestionResponse suggestion, User user, String encouragement) {
         return Quest.builder()
                 .title(suggestion.getTitle())
-//                .encouragement(suggestion.getEncouragement())
+                .encouragement(encouragement)
                 .user(user)
                 .build();
     }

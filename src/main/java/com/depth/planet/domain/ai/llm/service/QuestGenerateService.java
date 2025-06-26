@@ -5,10 +5,11 @@ import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.service.UserMessage;
 import dev.langchain4j.service.V;
 import dev.langchain4j.service.spring.AiService;
+import dev.langchain4j.service.spring.AiServiceWiringMode;
 
 import java.util.List;
 
-@AiService
+@AiService(chatModel = "json-model", wiringMode = AiServiceWiringMode.EXPLICIT)
 public interface QuestGenerateService {
 
     @SystemMessage("""

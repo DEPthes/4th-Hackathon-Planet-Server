@@ -1,6 +1,7 @@
 package com.depth.planet.domain.quest.service;
 
 import com.depth.planet.domain.ai.llm.dto.AiQuestDto;
+import com.depth.planet.domain.ai.llm.service.EncouragementGenerateService;
 import com.depth.planet.domain.ai.llm.service.QuestFeedbackGenerateService;
 import com.depth.planet.domain.ai.llm.service.QuestGenerateService;
 import com.depth.planet.domain.file.entity.EvidenceImage;
@@ -17,6 +18,7 @@ import com.depth.planet.system.exception.model.RestException;
 import com.depth.planet.system.security.model.UserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -24,6 +26,7 @@ import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class QuestService {
     private final FileSystemHandler fileSystemHandler;
     private final AttachedFileRepository attachedFileRepository;
@@ -32,6 +35,7 @@ public class QuestService {
     private final QuestSuggestionHolder questSuggestionHolder;
     private final QuestGenerateService questGenerateService;
     private final QuestFeedbackGenerateService questFeedbackGenerateService;
+    private final EncouragementGenerateService encouragementGenerateService;
 
     public List<QuestDto.QuestResponse> findMyQuestsBetween(LocalDate startDate, LocalDate endDate, UserDetails user) {
         List<Quest> result = questQueryRepository.findBetween(startDate, endDate, user);
@@ -81,7 +85,9 @@ public class QuestService {
         }
 
         QuestDto.QuestSuggestionResponse suggestion = suggestionOpt.get();
-        Quest quest = Quest.of(suggestion, user.getUser());
+        AiQuestDto.AIQuestEncouragementResponse response = encouragementGenerateService.generateEncouragement(suggestion.getTitle());
+
+        Quest quest = Quest.of(suggestion, user.getUser(), response.getEncouragement());
         Quest savedQuest = questRepository.save(quest);
 
         return QuestDto.QuestResponse.from(savedQuest);

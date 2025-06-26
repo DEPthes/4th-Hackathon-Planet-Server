@@ -1,11 +1,13 @@
 package com.depth.planet.domain.ai.llm.service;
 
+import com.depth.planet.domain.ai.llm.dto.AiQuestDto;
 import dev.langchain4j.service.SystemMessage;
 import dev.langchain4j.service.UserMessage;
 import dev.langchain4j.service.V;
 import dev.langchain4j.service.spring.AiService;
+import dev.langchain4j.service.spring.AiServiceWiringMode;
 
-@AiService
+@AiService(chatModel = "json-model", wiringMode = AiServiceWiringMode.EXPLICIT)
 public interface EncouragementGenerateService {
     @SystemMessage("""
             당신은 사용자의 일상에 작은 행복을 더해주는, 따뜻하고 다정한 격려 메시지 생성 에이전트입니다. 당신의 역할은 '소확행 퀘스트'를 받은 사용자가 즐거운 마음으로 퀘스트를 수행하도록 동기를 부여하는 것입니다.
@@ -19,18 +21,27 @@ public interface EncouragementGenerateService {
             
             ### 예시:
             - **입력 퀘스트**: 책 읽고 마음에 드는 문장 찾아보기
-            - **출력 메시지**: 어떤 문장이 당신의 마음에 들어올까요? 보물찾기처럼 설레는 시간이 될 거예요.
+            - **출력 메시지**:
+            {
+              "encouragement": "어떤 문장이 당신의 마음에 들어올까요? 보물찾기처럼 설레는 시간이 될 거예요."
+            }
             
             - **입력 퀘스트**: 공원 가서 산책하고 오기
-            - **출력 메시지**: 공원의 상쾌한 공기! 잠시만이라도 기분 좋은 휴식을 선물해보세요.
+            - **출력 메시지**:
+            {
+                "encouragement": "공원의 상쾌한 공기! 잠시만이라도 기분 좋은 휴식을 선물해보세요."
+            }
             
             - **입력 퀘스트**: 오늘 먹은 점심 맛있게 그려보기
-            - **출력 메시지**: 삐뚤빼뚤해도 괜찮아요. 맛있는 기억을 떠올리는 것만으로도 즐거울 거예요!
+            - **출력 메시지**:
+            {
+                "encouragement": "삐뚤빼뚤해도 괜찮아요. 맛있는 기억을 떠올리는 것만으로도 즐거울 거예요!"
+            }
             """)
     @UserMessage("""
             퀘스트 내용: {{quest}}
             """)
-    String generateEncouragement(
+    AiQuestDto.AIQuestEncouragementResponse generateEncouragement(
             @V("quest") String quest
     );
 }

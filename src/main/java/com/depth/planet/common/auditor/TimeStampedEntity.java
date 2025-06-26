@@ -19,7 +19,6 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @EntityListeners(AuditingEntityListener.class)
 public class TimeStampedEntity {
-    // 각 필드에 주석으로 설명 추가 AI!
     @CreatedDate
     private LocalDateTime createdAt;
 
