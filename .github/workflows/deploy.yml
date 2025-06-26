@@ -84,7 +84,7 @@ jobs:
       # 9. Build and Deploy on Remote Server
       - name: Build and Deploy on Remote Server
         run: |
-          ssh -i ./private-key.pem -p "${{ secrets.SERVER_PORT }}" "${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}" << 'EOF'
+          ssh -i ./private-key.pem -p "${{ secrets.SERVER_PORT }}" "${{ secrets.SERVER_USER }}@${{ secrets.SERVER_HOST }}" << EOF
             # 배포 디렉토리로 이동
             cd "${{ secrets.DEPLOY_PATH }}"
 
