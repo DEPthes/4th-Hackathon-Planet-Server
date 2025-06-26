@@ -3,6 +3,7 @@ package com.depth.planet.domain.user.service;
 import java.util.List;
 
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,6 +20,8 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class DummyAccountLoader implements CommandLineRunner {
     private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+
 
     @Override
     @Transactional
@@ -29,11 +32,11 @@ public class DummyAccountLoader implements CommandLineRunner {
 
         User admin = User.builder()
                 .email("admin@test.com")
-                .password("admin")
                 .name("Admin")
                 .mbti(MBTI.ENFJ)
                 .gender(GenderType.Male)
                 .hobbies(List.of("독서", "코딩", "영화감상"))
+                .password(passwordEncoder.encode("root"))
                 .build();
 
         userRepository.save(admin);
