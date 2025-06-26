@@ -3,9 +3,18 @@ package com.depth.planet.domain.quest.controller;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.springdoc.core.annotations.ParameterObject;
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.MediaType;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.depth.planet.domain.quest.dto.QuestDto;
 import com.depth.planet.domain.quest.service.QuestService;
@@ -68,7 +77,7 @@ public class QuestController {
     return questService.findMyQuestToday(user);
   }
 
-  @PutMapping("/{questId}/complete")
+  @PutMapping(value = "/{questId}/complete", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
   @Operation(summary = "퀘스트 완료", description = "퀘스트를 완료 처리하고 증거 이미지를 업로드합니다. (증거 이미지는 선택 사항)")
   @ApiResponse(responseCode = "200", description = "퀘스트 완료 성공")
   public QuestDto.QuestResponse completeQuest(
